@@ -1,15 +1,25 @@
-package welcome;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-public class Manager {
-
-	static void method (Ap a2)
-	{ 
-		System.out.println(a2.i);
-		a2.test();
-	}
-public static void main (String [] args)
+public class Manager
 {
-	Ap a1=new Ap();
-	Manager.method(a1);
+public static void main(String[] args)
+{
+	Configuration config=new Configuration();
+	config.configure("hibernate.cfg.xml");
+	SessionFactory factory=config.buildSessionFactory();
+	Session session=factory.openSession();
+	Transaction tx=session.beginTransaction();
+	Student p1=new Student();
+	p1.setId(12);
+	p1.setAge("23");
+	p1.setName("abc");
+	session.save(p1);
+	tx.commit();
+	session.flush();
+	session.close();
+	System.out.println("done");
 }
 }
